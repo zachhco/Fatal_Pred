@@ -30,8 +30,8 @@ X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=0.8, test
 from sklearn.ensemble import RandomForestRegressor
 
 # Initialize the model
-if 'model' not in st.session_state:
-    st.session_state['model'] = RandomForestRegressor(n_estimators=476,
+if 'model3' not in st.session_state:
+    st.session_state['model3'] = RandomForestRegressor(n_estimators=476,
                                                       min_samples_split=2,
                                                       bootstrap=True,
                                                       max_depth=50,
@@ -40,10 +40,10 @@ if 'model' not in st.session_state:
                                                       random_state=42)
 
     # Fit model to data
-    st.session_state['model'].fit(X_train, y_train)
+    st.session_state['model3'].fit(X_train, y_train)
 
     #make predictions
-    old_preds = st.session_state['model'].predict(X_valid)
+    old_preds = st.session_state['model3'].predict(X_valid)
 
 
 # Preprocess inputs so that categorical variables are encoded into binary
@@ -116,7 +116,7 @@ with st.expander("Enter Hyperparameters"):
 
     if st.button('Train Model'):
         # Update the model in the session state with new hyperparameters
-        st.session_state['model'] = RandomForestRegressor(
+        st.session_state['model3'] = RandomForestRegressor(
             n_estimators=n_estimators2,
             min_samples_split=min_samples_split2,
             bootstrap=True,
@@ -127,7 +127,7 @@ with st.expander("Enter Hyperparameters"):
             random_state=random_state2
         )
         # Fit model to data
-        st.session_state['model'].fit(X_train, y_train)
+        st.session_state['model3'].fit(X_train, y_train)
         # Display the model's current hyperparameters
         # st.write("Model retrained with the following hyperparameters:")
         # st.write(f"- n_estimators: {n_estimators2}")
@@ -144,7 +144,7 @@ with st.expander("Enter Hyperparameters"):
     # make a reset to default button
     if st.button('Reset to Default'):
         # Update the model in the session state with new hyperparameters
-        st.session_state['model'] = RandomForestRegressor(
+        st.session_state['model3'] = RandomForestRegressor(
             n_estimators=476,
             min_samples_split=2,
             bootstrap=True,
@@ -155,7 +155,7 @@ with st.expander("Enter Hyperparameters"):
             random_state=42
         )
         # Fit model to data
-        st.session_state['model'].fit(X_train, y_train)
+        st.session_state['model3'].fit(X_train, y_train)
         st.success('Model retrained with the default hyperparameters.')
 
         inputs = preprocess_inputs
@@ -169,7 +169,7 @@ if st.button('Predict'):
                             airbag_deploy, driver, front_seat, collision, ejection, large_size)
 
     # Make prediction
-    probability_of_death = st.session_state['model'].predict([inputs])[0]  # Predict now returns a continuous value
+    probability_of_death = st.session_state['model3'].predict([inputs])[0]  # Predict now returns a continuous value
     new_prob = probability_of_death * 100
 
     threshold = 0.5  # Define a threshold to decide on 'Death' vs 'No Death'

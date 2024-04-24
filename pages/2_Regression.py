@@ -24,8 +24,8 @@ X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=0.8, test
 from sklearn.ensemble import RandomForestRegressor
 
 # Initialize the model
-if 'model' not in st.session_state:
-    st.session_state['model'] = RandomForestRegressor(n_estimators=476,
+if 'model2' not in st.session_state:
+    st.session_state['model2'] = RandomForestRegressor(n_estimators=476,
                                                       min_samples_split=2,
                                                       bootstrap=True,
                                                       max_depth=50,
@@ -34,10 +34,10 @@ if 'model' not in st.session_state:
                                                       random_state=42)
 
     # Fit model to data
-    st.session_state['model'].fit(X_train, y_train)
+    st.session_state['model2'].fit(X_train, y_train)
 
     #make predictions
-    old_preds = st.session_state['model'].predict(X_valid)
+    old_preds = st.session_state['model2'].predict(X_valid)
 
 
 # Preprocess inputs so that categorical variables are encoded into binary
@@ -113,7 +113,7 @@ with left_col:
 
         if st.button('Train Model'):
             # Update the model in the session state with new hyperparameters
-            st.session_state['model'] = RandomForestRegressor(
+            st.session_state['model2'] = RandomForestRegressor(
                 n_estimators=n_estimators2,
                 min_samples_split=min_samples_split2,
                 bootstrap=True,
@@ -124,7 +124,7 @@ with left_col:
                 random_state=random_state2
             )
             # Fit model to data
-            st.session_state['model'].fit(X_train, y_train)
+            st.session_state['model2'].fit(X_train, y_train)
             # Display the model's current hyperparameters
             # st.write("Model retrained with the following hyperparameters:")
             # st.write(f"- n_estimators: {n_estimators2}")
@@ -141,7 +141,7 @@ with left_col:
         # make a reset to default button
         if st.button('Reset to Default'):
             # Update the model in the session state with new hyperparameters
-            st.session_state['model'] = RandomForestRegressor(
+            st.session_state['model2'] = RandomForestRegressor(
                 n_estimators=476,
                 min_samples_split=2,
                 bootstrap=True,
@@ -152,7 +152,7 @@ with left_col:
                 random_state=42
             )
             # Fit model to data
-            st.session_state['model'].fit(X_train, y_train)
+            st.session_state['model2'].fit(X_train, y_train)
             st.success('Model retrained with the default hyperparameters.')
 
             inputs = preprocess_inputs
@@ -169,7 +169,7 @@ with right_col:
                                 airbag_deploy, driver, front_seat, collision, ejection, large_size)
 
         # Make prediction
-        probability_of_death = st.session_state['model'].predict([inputs])[0]  # Predict now returns a continuous value
+        probability_of_death = st.session_state['model2'].predict([inputs])[0]  # Predict now returns a continuous value
 
         # Display the prediction probability
         st.markdown('The model predicts a **{:.2%}** probability of death.'.format(probability_of_death))
@@ -186,12 +186,12 @@ with right_col:
         # display the value for min_samples_split the the model used
         st.write("Model Hyperparameters:")
         hyperparameters = {
-            'n_estimators': st.session_state['model'].n_estimators,
-            'min_samples_split': st.session_state['model'].min_samples_split,
-            'max_depth': st.session_state['model'].max_depth,
-            'min_samples_leaf': st.session_state['model'].min_samples_leaf,
-            'bootstrap': st.session_state['model'].bootstrap,
-            'random_state': st.session_state['model'].random_state
+            'n_estimators': st.session_state['model2'].n_estimators,
+            'min_samples_split': st.session_state['model2'].min_samples_split,
+            'max_depth': st.session_state['model2'].max_depth,
+            'min_samples_leaf': st.session_state['model2'].min_samples_leaf,
+            'bootstrap': st.session_state['model2'].bootstrap,
+            'random_state': st.session_state['model2'].random_state
         }
 
         df = pd.DataFrame(hyperparameters.items(), columns=['Hyperparameter', 'Value'])
