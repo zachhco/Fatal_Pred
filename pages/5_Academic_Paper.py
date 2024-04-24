@@ -13,5 +13,5 @@ with open(pdf_path, "rb") as pdf_file:
 
 pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000" type="application/pdf"></iframe>'
 
-st.markdown(pdf_display, unsafe_allow_html=False)
+st.markdown(pdf_display, unsafe_allow_html=True)
 
